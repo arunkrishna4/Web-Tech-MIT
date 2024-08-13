@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> lab 2 </title>
+		<style>
+		
+		
+		.table1 ,td ,th{
+			border : 1px solid black;
+		}
+		td{
+		text-align : center;
+		}
+		.table-heading1{
+		padding :  10px 15px;
+		}
+		.table-heading2{
+		width : 10px;
+ 		padding :  10px 5px;
+		}
+		
+		.bl{
+		background-color: Cyan;
+		}
+		
+		span{
+		color: red;
+		}
+		
+		.break{
+		background-color:grey;
+		}
+		.labs{
+		background-color:pink;
+		}
+		.days{
+		
+		background-color:yellow;
+		
+		}
+		
+		.table2 {
+		border : 1px solid black;
+		width:70%;
+		}
+		
+		
+		
+		.table2 th td{
+		padding : 0px 10px 0px 10px;
+		
+		}
+
+		.No_border{
+		border : 0px;
+
+		}
+		
+		</style>		
+	</head>
+	<body>
+<center>	
+	<table style="width: 80%;">
+	
+	<tr>
+
+		 <!-- position: absolute; top: 10px;  -->
+	<td rowspan="6" class="No_border" >
+		<img src="./logo.png" style="height: 80px;
+  width: 80px; padding: 0px 0px 50px 0px; " alt="">
+	</td>
+	<td colspan = '4' class="No_border" style="font-weight:  bold;text-align: left; font-size: 35px;">MANIPAL INSTITUE OF TECHNOLOGY</td>
+	</tr>
+	<tr>
+	<td class="No_border" style ="text-align:left;font-size: 25px;">MANIPAL</td>
+	
+	</tr>
+	<tr>
+	<td  class="No_border" style ="text-align:left; font-size: small;"><i>(A constituent unit of MAHE, Manipal )</i></td>
+	
+	</tr>
+	<tr>
+	<td  class="No_border" style="text-align: end; width: 45%;">ACADEMIC SECTION</td>
+
+	</tr>
+	<tr>
+	<td class="No_border" style="text-align: justify;">TIME TABLE: JULY-DEC 2024</td>
+	
+	<td  class="No_border"style="text-align: end; width: 22%;">DEPT. OF DSCA</td>
+
+	</tr>
+	<tr>
+	<td class="No_border" style="text-align: start;">Semester & Secion: MCA I Semester & A</td>
+	<td class="No_border" style="text-align: start;">Lecture Hall: AB4 ICL 505</td>
+	<td  class="No_border" style="width: 20%; text-align: end;">Effective from : <b>29-07-2024</b></td>
+	</tr>
+	</table>
+	<center>	
+	
+	<br>
+	<center>
+	<table class ="table1" cellspacing = 0;>
+		
+		<thead>
+	
+		
+		<tr>
+			<th class = "table-heading1  ">OLD REGULAR</th>
+			<th class = "table-heading1 bl ">08.00 - 09.00</th>
+			<th class = "table-heading1 bl ">09.00 - 10.00</th>
+			<th class = "table-heading2 bl ">10.00 - 10.30</th>
+			<th class = "table-heading1 bl ">10.30 - 11.30</th>
+			<th class = "table-heading1 bl ">11.30 - 12.30</th>
+			<th class = "table-heading2 bl ">12.30 - 01.00</th>
+			<th class = "table-heading1 bl ">01.00 - 02.00</th>
+			<th class = "table-heading1 bl ">02.00 - 03.00</th>
+			<th class = "table-heading2 bl ">03.00 - 03.30</th>
+			<th class = "table-heading1 bl ">03.30 - 04.30</th>
+			<th class = "table-heading1 bl">4:30 - 5:30</th>
+		</tr>
+		</thead>
+		
+		<tbody>
+		
+		
+		 <tr>
+		 <td class ="days">MON</td>
+		 <td>OOP</td>
+		 <td>DBMS</td>
+		 <td class ="break">BREAK</td>
+		 <td>RMTC</td>
+		 <td>MATHS</td>
+		 <td colspan ='2' class ="break">LUNCH BREAK</td>
+		 <td colspan ='3' class ="labs">OOP LAB B1 LAB-4</td>
+		 <td>&nbsp;</td>
+		 </tr>
+		 
+		 <tr>
+		 <td class ="days">TUE</td>
+		 <td>&nbsp;</td>
+		 <td colspan ='3' class ="labs">WT LAB B2 LAB-5</td>
+		 <td colspan ='2' class ="break">LUNCH BREAK</td>
+		 <td><span>*</span>DBMS</td>
+		 <td>WT</td>
+		 <td class ="break">BREAK</td>
+		 <td>OOP</td>
+		 <td>DBMS</td>
+		 </tr>
+		 
+		 
+		 <tr>
+		 <td class ="days">WED</td>
+		 <td>&nbsp;</td>
+		 <td>MATHS</td>
+		 <td class ="break">BREAK</td>
+		 <td>&nbsp;</td>
+		 <td>WT</td>
+		 <td colspan ='2' class ="break">LUNCH BREAK</td>
+		 <td colspan ='3' class ="labs">RMTC LAB B2 LAB-2 <div>WT LAB B1 LAB-4</div></td>
+		 <td>&nbsp;</td>
+		 </tr>
+		 
+		 <tr>
+		 <td class ="days">THU</td>
+		 <td>&nbsp;</td>
+		 <td colspan ='3' class ="labs">DBMS LAB B2 LAB-3</td>
+		 <td colspan ='2'class ="break">LUNCH BREAK</td>
+		 <td>&nbsp;</td>
+		 <td>DBMS</td>
+		 <td class ="break">BREAK</td>
+		 <td>OOP</td>
+		 <td>MATHS</td>
+		 </tr>
+		 
+		  <tr>
+		 <td class ="days">FRI</td>
+		 <td>WT</td>
+		 <td>OOP</td>
+		 <td class ="break">BREAK</td>
+		 <td><span>*</span>MATHS</td>
+		 <td>DBMS</td>
+		 <td colspan ='2' class ="break">LUNCH BREAK</td>
+		 <td colspan ='3' class ="labs">RMTC LAB B1 LAB-1 <div>OOP LAB B2 LAB-4</div></td>
+		 <td>&nbsp;</td>
+		 </tr>
+		 
+		 
+		 <tr>
+		 <td class ="days">SAT</td>
+		 <td>&nbsp;</td>
+		 <td colspan ='3' class ="labs">DBMS LAB B1 LAB-2</td>
+		 <td colspan ='2' class ="break">LUNCH BREAK</td>
+		 <td><span>*</span>WT</td>
+		 <td>MATHS</td>
+		 <td class ="break">BREAK</td>
+		 <td>WT</td>
+		 <td><span>*</span>OOP</td>
+		 </tr>
+		 
+		 
+		</tbody>
+	</table>
+	</center>
+	
+		
+		<br>
+		<br>
+	<center>
+	<table class = "table2" cellspacing = 0;>
+	<thead>
+	<tr>
+			<th>Subject Code </th>
+			<th>Subject Name </th>
+			<th> Faculty </th>
+			<th>Subject Code </th>
+			<th>Subject Name </th>
+			<th> Faculty </th>
+			
+		</tr>
+		</thead>
+		
+		<tbody>
+		<tr>
+		<td>MAT 4111</td>
+		<td>COMPUTATIONAL MATHEMATICS</td>
+		<td>Dr Kavita Koppulla</td>
+		<td>MCA4142</td>
+		<td>Object oriented programming Lab -1 </td>
+		<td>Dr Raghuram Holla, Dr Pragya Jha, Mr Anirudhan</td>
+		</tr>
+		
+		<tr>
+		<td>MAT 4122</td>
+		<td>Object oriented programming - 1</td>
+		<td>DR Raghuram Holla</td>
+		<td>MCA 4143</td>
+		<td>Web Technologies Lab </td>
+		<td>Mr Akshay Bhatt, Dr Abhilash P., Mr Tojo Thomas</td>
+		</tr>
+		
+		
+		<tr>
+		<td>MCA 4112</td>
+		<td>Database Management System</td>
+		<td>Mr Vinayak M M</td>
+		<td>&nbsp;</td>
+		<td>&nbsp; </td>
+		<td>&nbsp;</td>
+		</tr>
+		
+		
+		<tr>
+		<td>MCA 4123</td>
+		<td>Web Technologies</td>
+		<td>Dr Abhilash P.</td>
+		<td>&nbsp;</td>
+		<td>&nbsp; </td>
+		<td>&nbsp;</td>
+		</tr>
+		
+		
+		<tr>
+		<td>HUM 5051</td>
+		<td>Reseach Methodology And Technical Communication </td>
+		<td>Dr Manisha, Mr Shrinidhi Bhat</td>
+		<td>&nbsp;</td>
+		<td>&nbsp; </td>
+		<td>&nbsp;</td>
+		</tr>
+		
+		
+		<tr>
+		<td>MAT 4111</td>
+		<td>Database Management System Lab</td>
+		<td>Mrs Archana, Mr Vinayak M M, Dr Chithra, Dr padmashree G</td>
+		<td>&nbsp;</td>
+		<td>&nbsp; </td>
+		<td>&nbsp;</td>
+		</tr>
+		
+		
+	
+		</tbody>
+		
+		
+	
+	</table>
+	<center>
+	
+	</body>
+</html>
