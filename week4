@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>passport verification</title>
+	<style>
+		
+		.d1{
+		height:20px;
+		width:20%;
+		}
+		.c1{
+			margin-left:228px;
+			}
+		.r1{
+			margin-left:100px;}
+		.sname{
+				margin:10px 0px 0px 17px;
+			}
+		.select{
+				margin:10px 0px 0px 0px;
+			}
+		img{
+		margin-left:60px;
+		height:50px;
+		width:175px;
+		}
+		.cap{
+			margin-left:170px;
+			}
+		#n1{
+			margin-left:37px;
+		}
+		#n2{
+		margin-left:55px;
+		}
+		#n4{
+			margin-left:55px;
+			}
+		.lq{
+			margin-top:10px;
+			margin-left:70px;
+		}
+		#n7{
+			margin-top:10px;
+			margin-left:170px;
+		}
+		#n8{
+			margin-left:165px;
+		}
+		#n9{
+			margin-left:105px;
+		}
+		#n10{
+			margin-left:135px;
+			}
+		#n11{
+				margin-left:147px;
+			}
+		#n12{
+			margin-left:60px;
+		}
+		#n13{
+			height:30px;
+			width:80px;
+			border-radius:10px;
+			margin-left:250px;
+			margin-top:30px;
+		}
+		
+	</style>
+</head>
+
+<body>
+<fieldset class="main">
+
+	<h1>User Registration</h1>
+	<p><b>Important Information:</b> Passport application can be processed at any PSK/POPSK/PSLK WITHIN INDIA irrespective of your residential address.</p>
+<form>
+
+	<label for="reg">Register at apply at</label>
+	
+	<input type="radio" name="reg" id="reg" value="CPV Delhi" class="r1"checked>
+	
+	<label>CPV Delhi</label>
+	<br>
+	
+	<input type="radio" name="reg" id="reg2" value="Passport office" class="c1">
+	<label>Passport Office</label>
+	
+	<br>
+	<br>
+	
+	<label for="n1">Given Name <small>(Max 45 charaters)</small></label>
+	<input type="text" name="name" id="n1" required>
+	
+	<br>
+	
+	<label for="n2">Surname<small> (Max 45 Characters) </small></label>
+	<input type="text" name="sname" id="n2" class="sname" required>
+	
+	<br>
+	
+	<label for="n3">Date Of Birth (DD/MM/YYYY) </label>
+	<input type="date" name="dob" id="n3" class="sname" required>
+	
+	<br>
+	
+	<label for="n4">E-mail Id <small>(Max 35 characters)</small>
+	<input type="email" name="email" id="n4" class="sname" required>
+	
+	<br>
+	
+	<label class="log">Do you want your Login id<br> to be same as E-mail id?</label>
+	<input type="radio" name="lc" id="n5" class="lq" required>
+	<label>yes</label>
+	<input type="radio" name="lc" id="n6" required checked>
+	<label>No</label>
+	
+	<br>
+	
+	<label for="n7">Login Id</label>
+	<input type="text" name="login" id="n7" required>
+	<br>
+	
+	<label for="n8">Password</label>
+	<input type="password" name="psw" id="n8" class="sname" required>
+	<br>
+	
+	<label for="n9">Confirm Password</label>
+	<input type="password" name="cpsw" id="n9" class="sname" required>
+	<br>
+	
+	<div class="select">
+	<label for="opt">Hint Question</label>
+	<select id="n10" >
+		<option value="birth city">birth city</option>
+		<option value="Fav color">Fav color</option>
+		<option value="Fav cricketer">Fav cricketer</option>
+		<option value="Fav Food">Fav Food</option>
+		<option value="First school">Fav school</option>
+	</select>
+	</div>
+	
+	<div class="select">
+	<label for="ha">Hint answer</label>
+	<input type="text" name="ha" id="n11" required>
+	</div>
+	<div class="select">
+	<label for="n11">enter characters displayed</label>
+	<img src="https://th.bing.com/th/id/OIP.czlrhOA1lBeAMBl2TDb5sQHaDJ?w=304&h=148&c=7&r=0&o=5&pid=1.7">
+	<br>
+	<div class="cap">
+	<input type="text" name="captha" id="n12" required>
+	</div>
+	<input type="submit" name="sub" id="n13">
+</form>
+
+</fieldset>
+</body>
+</html>
