@@ -1,192 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>passport verification</title>
-	<style>
-		.tooltip{
-			position: relative;
-			display:inline-block;
-			border-bottom: 1px solid black;
-		}
-		.tooltip .tooltiptext {
-			visibility: hidden;
-  			width: 120px;
-			top: 100%;
-			left: 50%;
-			margin-left: -60px;
-  			background-color: black;
-  			color: #fff;
-  			text-align: center;
-  			border-radius: 6px;
-
-  			position: absolute;
-  			z-index: 1;
-		}
-		.tooltip:hover .tooltiptext {
-  			visibility: visible;
-		}
-		#n1:focus{
-			background-color: lightblue;
-		}
-		#n2:focus{
-			background-color: lightblue;
-		}
-
-		.d1{
-		height:20px;
-		width:20%;
-		}
-		.c1{
-			margin-left:228px;
-			}
-		.r1{
-			margin-left:100px;}
-		.sname{
-				margin:10px 0px 0px 17px;
-			}
-		.select{
-				margin:10px 0px 0px 0px;
-			}
-		img{
-		margin-left:60px;
-		height:50px;
-		width:175px;
-		}
-		.cap{
-			margin-left:170px;
-			}
-		#n1{
-			margin-left:37px;
-		}
-		#n2{
-		margin-left:55px;
-		}
-		#n4{
-			margin-left:55px;
-			}
-		.lq{
-			margin-top:10px;
-			margin-left:70px;
-		}
-		#n7{
-			margin-top:10px;
-			margin-left:170px;
-		}
-		#n8{
-			margin-left:165px;
-		}
-		#n9{
-			margin-left:105px;
-		}
-		#n10{
-			margin-left:135px;
-			}
-		#n11{
-				margin-left:147px;
-			}
-		#n12{
-			margin-left:60px;
-		}
-		#n13{
-			height:30px;
-			width:80px;
-			border-radius:10px;
-			margin-left:250px;
-			margin-top:30px;
-		}
-		
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport Application</title>
+    <style>
+        body {
+            border: solid;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .l0{
+           text-indent: 10%;   
+        }
+        .p1{
+            text-indent: 10%;
+        }
+        a:link {
+            color: blue;
+            text-decoration: none;
+        }
+        a:visited{
+            color:purple;
+        }
+        a:hover{
+            color: red;
+        }
+        button {
+            background-color: #0096FF;
+            color: white;
+            border: none;
+            font-size: 16px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #007ACC;
+        }
+        .top {
+            position: absolute;
+            top: 70px;
+            right: 16px;
+        }
+        form .required:after, span {
+            content: '*';
+            color: red;
+        }
+        
+        .input{
+            width: 50%;
+            padding: 15px;
+            box-sizing: border-box;
+            margin-left: 30px;
+        }
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+            padding: 10px;
+        }
+        .sel{
+            position: absolute;
+             right: 100px;
+        }
+        .tib,.name{
+            position: absolute;
+            padding: 0px;
+            right: 550px;
+            font-size: 13px;
+        }
+        .button{
+            align-items: center;
+        }
+        select{
+            width: 170px;
+        }
+        input[type="date"]{
+            width: 165px;
+        }
+    </style>
 </head>
-
 <body>
-<fieldset>
-
-	<h1>User Registration</h1>
-	<p><b>Important Information:</b> Passport application can be processed at any PSK/POPSK/PSLK WITHIN INDIA irrespective of your residential address.</p>
-<form>
-
-	<label for="reg">Register at apply at</label>
-	
-	<input type="radio" name="reg" id="reg" value="CPV Delhi" class="r1" checked tabindex="1">
-	
-	<label>CPV Delhi</label>
-	<br>
-	
-	<input type="radio" name="reg" id="reg2" value="Passport office" class="c1">
-	<label>Passport Office</label>
-	
-	<br>
-	<br>
-	
-	<label for="n1">Given <u>N</u>ame <small>(Max 45 charaters)</small></label>
-	<input type="text" name="name" id="n1" accesskey="n" required >
-	
-	<br>
-	
-	<label for="n2"><u>S</u>urname<small> (Max 45 Characters) </small></label>
-	<input type="text" name="sname" id="n2" class="sname" accesskey="s" tabindex="2" required>
-	
-	<br>
-	
-	<label for="n3">Date Of Birth (DD/MM/YYYY) </label>
-	<input type="date" name="dob" id="n3" class="sname" required>
-	
-	<br>
-	
-	<label for="n4">E-mail Id <small>(Max 35 characters)</small>
-	<input type="email" name="email" id="n4" class="sname" required>
-	
-	<br>
-	
-	<label class="log">Do you want your Login id<br> to be same as E-mail id?</label>
-	<input type="radio" name="lc" id="n5" class="lq" required>
-	<label>yes</label>
-	<input type="radio" name="lc" id="n6" required checked>
-	<label>No</label>
-	
-	<br>
-	
-	<label for="n7">Login Id</label>
-	<input type="text" name="login" id="n7" required>
-	<br>
-	
-	<label for="n8">Password</label>
-	<input type="password" name="psw" id="n8" class="sname" required>
-	<br>
-	
-	<label for="n9">Confirm Password</label>
-	<input type="password" name="cpsw" id="n9" class="sname" required>
-	<br>
-	
-	<div class="select">
-	<label for="opt">Hint Question</label>
-	<select id="n10" >
-		<option value="birth city">birth city</option>
-		<option value="Fav color">Fav color</option>
-		<option value="Fav cricketer">Fav cricketer</option>
-		<option value="Fav Food">Fav Food</option>
-		<option value="First school">Fav school</option>
-	</select>
-	</div>
-	
-	<div class="select">
-	<label for="ha">Hint answer</label>
-	<input type="text" name="ha" id="n11" required>
-	</div>
-	<div class="select">
-	<label for="n11" class="tooltip">
-		enter characters displayed
-		<span class="tooltiptext">Prove you are a person</span>
-	</label>
-	<img src="https://th.bing.com/th/id/OIP.czlrhOA1lBeAMBl2TDb5sQHaDJ?w=304&h=148&c=7&r=0&o=5&pid=1.7">
-	<br>
-	<div class="cap">
-		
-	<input type="text" name="captha" id="n12" required>
-	</div>
-	<input type="submit" name="sub" id="n13">
-</form>
-
-</fieldset>
+    <header>
+        <h1 style="text-align: center;">User Registration</h3>
+    </header>
+    <p><strong>Important Information:</strong> Passport application can be processed at any PSK/POPSK/PSLK within India irrespective of your residential address.</p>
+    <p><a href="https://portal1.passportindia.gov.in/AppOnlineProject/online/apptAvailStatus">Click here</a> to check the appointment availability at all PSK/POPSK/PSLK.</p>
+    <p><a href="https://portal2.passportindia.gov.in/AppOnlineProject/pdf/CIR_0186917_Y.pdf">Click here</a> to know more about the Apply Anywhere in India scheme for Passport Services.</p>
+    
+    <p class="top">Fields marked with an asterisk (<span>*</span>) are mandatory.</p>
+    
+    <form method="post" action="">
+        
+            <p class="sel">Select the 'CPV Delhi' option to apply for Diplomatic/Official passport at Consular, Passport and Visa
+                (CPV) division, Delhi.</p>
+                <p class="required">Register to apply at</p>
+                <div class="l0">
+                    <input type="radio" id="CPV" name="apply">
+                    <label for="CPV">CPV Delhi</label><br>
+                    </div>
+                    <div class="p1">
+                    <input type="radio" id="pass" name="apply" checked>
+                    <label for="pass">Passport Office</label>
+            </div>
+                
+            <p class="tib">Tibetan Refugees applying for Identity Certificate must register with 'Delhi' Passport Office.</p>
+            <div class="l1">
+           <label for="POffice" class="required">Passport Office</label>
+                
+                    <select name="POffice" id="POffice" required>
+                        <option value="" disabled selected>----select-------</option>
+                        <option value="Ahmedabad">Ahmedabad</option>
+                        <option value="Bengaluru">Bengaluru</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Jammu">Jammu</option>
+                        <option value="Kolkata">Kolkata</option>
+                    </select>
+                    
+            </div>
+                
+            <p class="name"><b>First Name + Middle Name</b>. Initials and honorifics (e.g. Dr., Col., etc.) are not allowed.</p>
+            <div class="l2"  title="enter the name correctly">
+                <!--access key u for the given name field-->
+                <label for="Gname" class="required">Given <u>N</u>ame<small>(Max 45 Characters)</small></label>
+                <input type="text" name="Gname" id="Gname" accesskey="n" required/>
+                
+            </div>
+            <div class="l2">
+                <label for="Sname" class="required"><u>S</u>urname<small>(Max 45 Characters)</small></label>
+                <input type="text" name="Sname" id="Sname" required accesskey="s"/>
+            </div>
+            <div class="l3">
+                <label for="Bdate" class="required">Date of <u>B</u>irth<small>(DD/MM/YYYY)</small></label>
+                <input type="date" name="Bdate" id="Bdate" accesskey="b" required/>
+            </div>
+            <div class="l4" title="your personal email id">
+                <label for="email" class="required"><u>E</u>-mail Id (Max 35 Characters)</label>
+                <input type="email" name="email" id="email" required accesskey="e"/>
+            </div>
+            <div class="l5">
+                <label>Do you want your Login Id to be the same as E-mail Id?</label>
+                
+                    <input type="radio" id="yes" name="choose">
+                    <label for="yes">Yes</label>
+                    <input type="radio" id="no" name="choose" checked>
+                    <label for="no">No</label>
+                
+            </div>
+            <div class="l6">
+                <label for="loginId" class="required"><u>L</u>ogin Id</label>
+                <input type="text" name="loginId" id="loginId" required accesskey="l">
+                <a href="#">Check Availability</a>
+            </div>
+            <div class="l7">
+                <label for="password" class="required"><u>P</u>assword</label>
+                <!--access key p for the password field-->
+                <input type="password" name="password" id="password" accesskey="p" required>
+                <a href="https://portal2.passportindia.gov.in/AppOnlineProject/onlineHtml/passwordPolicy.html">Password Policy</a>
+            </div>
+            <div class="l8">
+                <label for="Cpassword" class="required"><u>C</u>onfirm Password</label>
+                <input type="password" name="Cpassword" id="Cpassword" required accesskey="c">
+            </div>
+        <div class="l9">
+                <label for="HQ" class="required">Hint <u>Q</u>uestion</label>
+                
+                    <select name="HQ" id="HQ" required>
+                        <option value="" disabled selected>----select-------</option>
+                        <option value="BirthCity">Birth City</option>
+                        <option value="FColour">Favourite Color</option>
+                        <option value="FCricketer">Favourite Cricketer</option>
+                        <option value="Food">Favourite Food</option>
+                    </select>
+            <div class="l10">
+                <label for="HA" class="required">Hint <u>A</u>nswer</label>
+                <input type="text" name="HA" id="HA" required>
+            </div>
+            <div class="l11">
+                <td><label for="captcha" class="required">Enter Characters <u>D</u>isplayed</label></td>
+                <img src=""/>
+                <td><input type="text" name="captcha" id="captcha" required></td>
+            </div>
+			<br>
+			<br>
+        <button type="submit" style="margin:15px;width:90px;height:30px;">submit</button>
+        <button type="reset" style="margin:15px;width:90px;height:30px">Clear</button>
+    </form>
 </body>
-</html>
+</html> 
