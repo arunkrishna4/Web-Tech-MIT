@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+	<style>
+		input, button {
+			height: 40px;
+			width: 90px;
+			border-radius: 20px;
+		}
+	</style>
+</head>
+<body>
+	<form>
+		<h1>Alert</h1>
+		<button type="button" onclick="al()">Alert</button>
+		<h1>Confirm</h1>
+		<button type="button" onclick="con()">Confirm</button>
+		<h1>Prompt</h1>
+		<button type="button" onclick="pr()">Prompt</button>
+		<p id="c1" style="font-size:26px"></p>
+	</form>
+	<script>
+		function al() {
+			alert("bello");
+		}
+		function pr() {
+			let res = prompt("Enter your name:", "");
+			if (res != null) {
+				document.getElementById("c1").innerHTML = "hello " + res;
+			}
+		}
+		function con() {
+			let res = confirm("Press a button!");
+			if (res == true) {
+				alert("You have pressed OK");
+			} else {
+				alert("You have pressed Cancel");
+			}
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width">
+	<script>
+		function pro() {
+			let res = prompt("Enter your name:", "");
+			if (res != null) {
+				var newwin = window.open("about:blank", "_blank");
+				newwin.document.write(res);
+			}
+		}
+		window.onload = function() {
+			pro();
+		}
+	</script>
+</head>
+<body>
+</body>
+</html>
