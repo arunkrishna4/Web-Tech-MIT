@@ -1,27 +1,38 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport" content="width=device-width">
-	
+<meta name="viewport" initial-scale="1.0" content="width=device-width">
+<title>
+js boxes</title>
+<script>
+function f1(){
+   const selectbox=document.getElementById("files");
+   const selectfile=selectbox.value;
+   if(selectfile){
+    window.open(selectfile,"_blank");
+   }
+}
+</script>
+<style>
+   div{
+      font-size:27px;
+      padding:30px;
+   }
+   select{
+      font-size:20px;
+   }
+</style>
 </head>
 <body>
-	<H1>select from any of these: </H1>
-	<form>
-	<select>
-		<option value="week1" >week1</option>
-		<option value="week2" >week2</option>
-		<option value="week3" >week3</option>
-		<option value="week4" >week4</option>
-		<option value="week5" >week5</option>
-		<option value="week6" >week6</option>
-		<option value="week7" >week7</option>
-	</select>
-	<button type="submit" onclick="fun()">enter</button>
-	</form> 	
-	<script>
-		function fun(){
-			window.open("./1st lab.html");
-		}
-	</script>
+<div>
+<label>Choose A File To Open: </label>
+<select name="files" id="files" onchange="f1()">
+<option value="">----select----</option>    
+<option value="./timetable.html">time table</option>
+<option value="./resume">resume</option>
+<option value="./lab5.html">gallery</option>
+<option value="./passport.html">passport</option>
+<option value="./lab5-2.html">webpage</option>
+</select>
+</div>
 </body>
 </html>
