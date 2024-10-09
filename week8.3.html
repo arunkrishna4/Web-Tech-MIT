@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The Window Object</h1>
+<h2>The setTimeout() Method</h2>
+
+<h2 id="demo"></h2>
+
+<script>
+const myTimeout = setTimeout(myGreeting, 100); 
+setInterval(myGreeting(),1000);
+
+function myGreeting() {
+  var d = new Date(); 
+  var h=d.getHours();
+  var s=d.getSeconds();
+  var m=d.getMinutes();
+  document.getElementById("demo").innerHTML = h+":"+m+":"+s;
+  
+}
+</script>
+
+</body>
+</html>

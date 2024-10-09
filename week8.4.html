@@ -1,0 +1,58 @@
+<html>
+<head>
+    <title>Drawing</title>
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+        canvas{
+            border:1px solid black;
+            background-image:url("https://th.bing.com/th/id/OIP.mx626-WGpEY3JEAh8-QUhwHaEK?w=328&h=184&c=7&r=0&o=5&pid=1.7");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+ <script type="text/javascript">
+    var i=0; var ab=0; var x11 = new Array(); var y11 = new Array();
+    //Drawing
+    function point_it(event)
+    {
+        document.getElementById("count").innerHTML=i;
+        var canvas = document.getElementById("line");
+        var context = canvas.getContext("2d");
+        document.getElementById("xy").innerHTML="X is :"+event.offsetX+"Y is :"+event.offsetY;
+        pos_x = event.offsetX;
+        pos_y = event.offsetY;
+        i++;
+        x11[i]=pos_x;
+        y11[i]=pos_y;
+        if(!canvas.getContext){
+            return;
+        }
+        var a = x11[i-1];
+        var b = y11[i-1];
+        var c = x11[i];
+        var d = y11[i];
+        //change the color of lines draw by defining array of colors
+        var color=['#00FFBB'];
+        ab++;
+        if(ab==color.length)
+        ab=0;
+        context.strokeStyle = color[ab];
+        context.beginPath();
+        context.moveTo(a, b);
+        context.lineTo(c,d);
+        context.stroke();
+        context.closePath();
+    }
+</script>
+ <div id="pointer_div">
+    <canvas id="line" width="800px" height="600px" onclick="point_it(event)" >
+    </canvas>.
+    <p id="count"></p>
+    <p id="xy"></p>
+</div>
+</body>
+</html>
