@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Professional Multistep Form</title>
+ <style>
+ body {
+ font-family: 'Helvetica Neue', Arial, sans-serif;
+ background-color: #f7f9fc;
+ margin: 0;
+ padding: 0;
+ }
+ .container {
+ max-width: 600px;
+ margin: 50px auto;
+ padding: 20px;
+ background-color: #fff;
+ border-radius: 8px;
+ box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+ }
+ h2 {
+ color: #333;
+ text-align: center;
+ font-weight: 500;
+ margin-bottom: 20px;
+ }
+ .steps {
+ display: flex;
+ justify-content: space-between;
+ margin-bottom: 30px;
+ }
+ .step {
+ width: 40px;
+ height: 40px;
+ background-color: #ddd;
+ border-radius: 50%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ color: #fff;
+ font-weight: bold;
+ }
+ .step.active {
+ background-color: #4caf50;
+ }
+ .form-step {
+ display: none;
+ }
+ .form-step.active {
+ display: block;
+ }
+ label {
+ display: block;
+ margin-bottom: 8px;
+ color: #333;
+ font-weight: bold;
+ }
+ input[type="text"], 
+ input[type="password"],
+ input[type="email"],
+ input[type="tel"],
+ input[type="number"] {
+ width: calc(100% - 20px);
+ padding: 10px;
+ margin-bottom: 20px;
+ border: 1px solid #ccc;
+ border-radius: 4px;
+ font-size: 16px;
+ transition: border 0.3s ease;
+ }
+ input:focus {
+ border-color: #4caf50;
+ outline: none;
+ }
+ .error {
+ color: red;
+ font-size: 12px;
+ margin-top: -15px;
+ margin-bottom: 10px;
+ }
+ button {
+ background-color: #4caf50;
+ color: white;
+ padding: 10px 20px;
+ border: none;
+ border-radius: 4px;
+ font-size: 16px;
+ cursor: pointer;
+ margin-right: 10px;
+ transition: background-color 0.3s ease;
+ }
+ button:hover {
+ background-color: #45a049;
+ }
+ button:disabled {
+ background-color: #ccc;
+ cursor: not-allowed;
+ }
+ .review-content {
+ padding: 20px;
+ background-color: #f7f7f7;
+ border: 1px solid #e1e1e1;
+ border-radius: 8px;
+ margin-bottom: 20px;
+ }
+ .review-label {
+ font-weight: bold;
+ color: #333;
+ }
+ .review-value {
+ color: #666;
+ }
+ .button-group {
+ text-align: right;
+ }
+ </style>
+</head>
+<body>
+<div class="container">
+ <h2>Multi-step Form with Review</h2>
+ <div class="steps">
+ <span class="step active" id="step1">1</span>
+ <span class="step" id="step2">2</span>
+ <span class="step" id="step3">3</span>
+ <span class="step" id="step4">4</span>
+ </div>
+ <form id="multistepForm" onsubmit="return handleSubmit()">
+ <!-- Step 1: Profile Details -->
+ <div class="form-step active" id="step-1">
+ <h3>Profile Details</h3>
+ <label for="uname">Name</label>
+ <input type="text" id="uname" name="uname">
+ <span class="error" id="nameError"></span>
+ <label for="pwd">Password</label>
+ <input type="password" id="pwd" name="pwd">
+ <span class="error" id="pwdError"></span>
+ <label for="cpwd">Confirm Password</label>
+ <input type="password" id="cpwd" name="cpwd">
+ <span class="error" id="cpwdError"></span>
+ <div class="button-group">
+ <button type="button" onclick="nextStep(1)">Next</button>
+ </div>
+ </div>
+ <!-- Step 2: Contact Details -->
+ <div class="form-step" id="step-2">
+ <h3>Personal Details</h3>
+
+ <label for="fname">FirstName</label>
+ <input type="text" id="fname" name="fname">
+ <span class="error" id="fnameError"></span>
+
+ <label for="lname">LastName</label>
+ <input type="text" id="lname" name="lname">
+ <span class="error" id="lnameError"></span>
+
+ <label for="phone">Phone Number</label>
+ <input type="tel" id="phone" name="phone">
+ <span class="error" id="phoneError"></span>
+
+ <label for="dob">Date of Birth(DD/MM/YYYY)</label>
+ <input type="text" id="dob" name="dob">
+ <span class="error" id="dobError"></span>
+
+ <div class="button-group">
+ <button type="button" onclick="prevStep(2)">Previous</button>
+ <button type="button" onclick="nextStep(2)">Next</button>
+ </div>
+ </div>
+ <!-- Step 3: Experience Details -->
+ <div class="form-step" id="step-3">
+ <h3>Experience Details</h3>
+ <label for="experience">Years of Experience</label>
+ <input type="number" id="experience" name="experience" min="0" max="50">
+ <span class="error" id="experienceError"></span>
+ <div class="button-group">
+ <button type="button" onclick="prevStep(3)">Previous</button>
+ <button type="button" onclick="nextStep(3)">Next</button>
+ </div>
+ </div>
+ <!-- Step 4: Review Details -->
+ <div class="form-step" id="step-4">
+ <h3>Review Your Details</h3>
+ <div class="review-content">
+ <p><span class="review-label">Name:</span> <span class="review-value" 
+id="reviewName"></span></p>
+ <p><span class="review-label">Date of Birth:</span> <span class="review-value" 
+id="reviewDob"></span></p>
+ <p><span class="review-label">Email:</span> <span class="review-value" 
+id="reviewEmail"></span></p>
+ <p><span class="review-label">Phone:</span> <span class="review-value" 
+id="reviewPhone"></span></p>
+ <p><span class="review-label">Years of Experience:</span> <span class="review-value" 
+id="reviewExperience"></span></p>
+ </div>
+ <div class="button-group">
+ <button type="button" onclick="prevStep(4)">Previous</button>
+ <button type="submit">Submit</button>
+ </div>
+ </div>
+ </form>
+</div>
+<script>
+ let currentStep = 1;
+ function nextStep(step) {
+ if (validateStep(step)) {
+ document.getElementById('step-' + step).classList.remove('active');
+ currentStep++;
+ if (currentStep === 4) {
+ fillReview();
+ }
+ document.getElementById('step-' + currentStep).classList.add('active');
+ updateStepsIndicator();
+ }
+ }
+ function prevStep(step) {
+ document.getElementById('step-' + step).classList.remove('active');
+ currentStep--;
+ document.getElementById('step-' + currentStep).classList.add('active');
+ updateStepsIndicator();
+ }
+ function updateStepsIndicator() {
+ document.querySelectorAll('.step').forEach((step, index) => {
+ if (index < currentStep) {
+ step.classList.add('active');
+ } else {
+ step.classList.remove('active');
+ }
+ });
+ }
+ function validateStep(step) {
+ let valid = true;
+ document.querySelectorAll('.error').forEach(error => error.innerHTML = '');
+ if (step === 1) {
+ const uname = document.getElementById('uname').value.trim();
+ const pwd = document.getElementById('pwd').value;
+ const cpwd = document.getElementById('cpwd').value;
+ if (uname === '') {
+ document.getElementById('nameError').innerHTML = 'Name is required';
+ valid = false;
+ }
+ if (pwd === '') {
+ document.getElementById('pwdError').innerHTML = 'Password is required';
+ valid = false;
+ }
+ if(cpwd === ''){
+    document.getElementById("cpwdError").innerHTML = "Confirm your password";
+    valid = false;
+ }
+  if(cpwd != pwd){
+    document.getElementById("cpwdError").innerHTML = "Does not match your password";
+    valid = false;
+ }
+ }
+ if (step === 2) {
+ const fname = document.getElementById('fname').value.trim();
+ const lname = document.getElementById('lname').value.trim();
+ const dob=document.getElementById('dob').value;
+ let dobpat=/[0-3]{1}[0-9]{1}\/[0-1]{1}[0-9]{1}\/[0-9]{4}/;
+ if (fname === '') {
+ document.getElementById('fnameError').innerHTML = 'first name is required';
+ valid = false;
+ }
+ if (lname === '') {
+ document.getElementById('lnameError').innerHTML = 'Last name is required';
+ valid = false;
+ }
+ if(!dobpat.test(dob)){
+    document.getElementById('dobError').innerHTML = 'enter a valid date';
+    valid=false;
+ }
+ if (step === 3) {
+ const experience = document.getElementById('experience').value;
+ if (experience === '') {
+ document.getElementById('experienceError').innerHTML = 'Experience is required';
+ valid = false;
+ }
+ }
+ return valid;
+ }
+ function fillReview() {
+ document.getElementById('reviewName').innerText = document.getElementById('name').value;
+ document.getElementById('reviewDob').innerText = document.getElementById('dob').value;
+ document.getElementById('reviewEmail').innerText = document.getElementById('email').value;
+ document.getElementById('reviewPhone').innerText = 
+document.getElementById('phone').value;
+ document.getElementById('reviewExperience').innerText = 
+document.getElementById('experience').value;
+ }
+ function handleSubmit() {
+ if (validateStep(4)) {
+        alert('Form Submitted Successfully!');
+        return true;
+    }
+    return false;
+ }
+</script>
+</body>
+</html>
