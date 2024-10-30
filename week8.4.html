@@ -1,58 +1,82 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Drawing</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Freehand Drawing</title>
     <style>
-        *{
-            box-sizing:border-box;
+        body {
+            font-family: Arial, sans-serif;
         }
-        canvas{
-            border:1px solid black;
-            background-image:url("https://th.bing.com/th/id/OIP.mx626-WGpEY3JEAh8-QUhwHaEK?w=328&h=184&c=7&r=0&o=5&pid=1.7");
-            background-repeat: no-repeat;
-            background-size: cover;
+        canvas {
+            border: 2px solid black;
+            display: block;
+            margin: 20px auto;
+            cursor: crosshair;
+        }
+        #coordinates {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
- <script type="text/javascript">
-    var i=0; var ab=0; var x11 = new Array(); var y11 = new Array();
-    //Drawing
-    function point_it(event)
-    {
-        document.getElementById("count").innerHTML=i;
-        var canvas = document.getElementById("line");
-        var context = canvas.getContext("2d");
-        document.getElementById("xy").innerHTML="X is :"+event.offsetX+"Y is :"+event.offsetY;
-        pos_x = event.offsetX;
-        pos_y = event.offsetY;
-        i++;
-        x11[i]=pos_x;
-        y11[i]=pos_y;
-        if(!canvas.getContext){
-            return;
-        }
-        var a = x11[i-1];
-        var b = y11[i-1];
-        var c = x11[i];
-        var d = y11[i];
-        //change the color of lines draw by defining array of colors
-        var color=['#00FFBB'];
-        ab++;
-        if(ab==color.length)
-        ab=0;
-        context.strokeStyle = color[ab];
-        context.beginPath();
-        context.moveTo(a, b);
-        context.lineTo(c,d);
-        context.stroke();
-        context.closePath();
+
+<canvas id="drawingCanvas" width="600" height="400"></canvas>
+<p id="coordinates">Mouse Coordinates: X: 0, Y: 0</p>
+
+<script>
+    const canvas = document.getElementById('drawingCanvas');
+    const ctx = canvas.getContext('2d');
+    const coordinates = document.getElementById('coordinates');
+
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    // Function to update mouse coordinates
+    function updateMouseCoordinates(event) {
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = event.clientX - rect.left;
+        const mouseY = event.clientY - rect.top;
+        coordinates.textContent = `Mouse Coordinates: X: ${mouseX}, Y: ${mouseY}`;
+        return { mouseX, mouseY };
     }
+
+    // Start drawing when the mouse is pressed down
+    canvas.addEventListener('mousedown', (event) => {
+        isDrawing = true;
+        const { mouseX, mouseY } = updateMouseCoordinates(event);
+        lastX = mouseX;
+        lastY = mouseY;
+    });
+
+    // Stop drawing when the mouse is released or leaves the canvas
+    canvas.addEventListener('mouseup', () => {
+        isDrawing = false;
+    });
+    canvas.addEventListener('mouseleave', () => {
+        isDrawing = false;
+    });
+
+    // Draw when the mouse is moved
+    canvas.addEventListener('mousemove', (event) => {
+        const { mouseX, mouseY } = updateMouseCoordinates(event);
+        if (!isDrawing) return;
+
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(mouseX, mouseY);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.closePath();
+
+        lastX = mouseX;
+        lastY = mouseY;
+    });
 </script>
- <div id="pointer_div">
-    <canvas id="line" width="800px" height="600px" onclick="point_it(event)" >
-    </canvas>.
-    <p id="count"></p>
-    <p id="xy"></p>
-</div>
+
 </body>
 </html>
