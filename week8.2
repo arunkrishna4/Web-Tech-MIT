@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Example</title>
+</head>
+
+<body>
+    <p id="result"></p>
+
+    <script>
+        var res = document.getElementById('result');
+
+        // Function to set a cookie with an expiry date
+        function setCookie(id, value, days) {
+            var d = new Date();
+            d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000); // Fixing the getTime call
+            var expires = "expires=" + d.toUTCString() + ";"; // Correcting the spelling and calling toUTCString
+            document.cookie = `${id}=${value};${expires}path=/;`; // Setting the cookie
+        }
+
+        // Function to get a cookie by name
+        function getCookie(id) {
+            var cname = `${id}=`;
+            var cookies = document.cookie;
+            var cookieArr = cookies.split(';');
+            var value = '';
+            cookieArr.forEach(element => {
+                var el = element.trim();
+                if (el.includes(cname)) {
+                    value = el.substr(cname.length);
+                }
+            });
+
+            return value;
+        }
+
+        // On page load
+        window.addEventListener('load', () => {
+
+            // Getting cookie values
+            var username = getCookie('username');
+            var firstName = getCookie('firstName');
+            var lastName = getCookie('lastName');
+            var mobile = getCookie('mobile');
+
+            // If any cookie is missing, ask for all information in a single prompt
+            if (username === '' || firstName === '' || lastName === '' || mobile === '') {
+                var userDetails = prompt("Please enter your details in the format: username,firstName,lastName,mobile");
+
+                // Check if user entered something
+                if (userDetails !== '' && userDetails !== null) {
+                    // Split the input by commas to get individual details
+                    var detailsArr = userDetails.split(',');
+
+                    if (detailsArr.length === 4) {
+                        username = detailsArr[0].trim();
+                        firstName = detailsArr[1].trim();
+                        lastName = detailsArr[2].trim();
+                        mobile = detailsArr[3].trim();
+
+                        // Set cookies for each detail
+                        setCookie('username', username, 1);
+                        setCookie('firstName', firstName, 1);
+                        setCookie('lastName', lastName, 1);
+                        setCookie('mobile', mobile, 1);
+                    } else {
+                        alert("Please enter all details in the correct format: username,firstName,lastName,mobile");
+                    }
+                }
+            }
+
+            // Display the values from cookies
+            res.innerHTML = `Username: ${username} <br> First Name: ${firstName} <br> Last Name: ${lastName} <br> Mobile: ${mobile}`;
+        });
+    </script>
+</body>
+
+</html>
