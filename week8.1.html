@@ -1,49 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cookie Example</title>
-    <script>
-        function setCookie(cname, cvalue, exdays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toGMTString();
-            document.cookie = cname + "=" + cvalue + "; " + expires;
-            document.cookie = "time = " + d.toGMTString(d.getTime()); // Set time with expiration
-        }
-
-        function getCookie(cname) {
-            var name = cname + "=";
-            document.getElementById("demo3").innerHTML += "Cookie Data: " + document.cookie + "<br/>";
-            var ca = document.cookie.split(';');
-            document.getElementById("demo1").innerHTML += "No of cookies: " + ca.length + "<br/>";
-            
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1); // Remove leading spaces
-                document.getElementById("demo1").innerHTML += c + "<br/>";
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
-
-        function checkCookie() {
-            var user = getCookie("username3");
-            if (user != "") {
-                alert("Welcome again " + user);
-            } else {
-                var user = prompt("Please enter your name:", "");
-                if (user != "" && user != null) {
-                    setCookie("username3", user, 30);
-                }
-            }
-        }
-    </script>
+    <title>Cookie Example with Last Login</title>
 </head>
-<body onload="checkCookie()">
-    <p id="demo1"></p>
-    <p id="demo2"></p>
-    <p id="demo3"></p>
+<body>
+<p id="result"></p>
+
+<script>
+    var result = document.getElementById('result');
+
+    // Function to get a cookie by name and decode it
+    function getCookie(id) {
+        var name = id + '=';
+        var ca = document.cookie;
+        var cookies = ca.split(';');
+        var value = "";
+
+        // Iterating through cookies to find the specific one
+        cookies.forEach((element, index) => {
+            var el = element.trim(); // Trimming leading and trailing spaces
+            if (el.indexOf(name) === 0) { // Checking for the cookie name
+                value = el.substring(name.length);
+            }
+        });
+
+        return decodeURIComponent(value); // Decode the cookie value before returning
+    }
+
+    // Function to set a cookie with an expiry date
+    function SetCookie(id, value, days) {
+        var d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString() + ";";
+        document.cookie = `${encodeURIComponent(id)}=${encodeURIComponent(value)};${expires}path=/;`;
+    }
+
+    // Function to get the current date and time in a readable format
+    function getCurrentDateTime() {
+        var d = new Date();
+        return d.toLocaleString(); // Returns date and time as a string
+    }
+
+    // On page load
+    window.addEventListener('load', () => {
+        var username = getCookie("username");
+        var lastLogin = getCookie("lastLogin");
+
+        if (username === "") {
+            
+            var user = prompt("What is your name?");
+            if (user != null && user.trim() !== '') {
+                SetCookie("username", user, 1); 
+                SetCookie("lastLogin", getCurrentDateTime(), 1); 
+                result.innerHTML = `Hello, ${user}! Welcome for the first time.`;
+            } else {
+                result.innerHTML = "You should have entered your name :(";
+            }
+        } else {
+            
+            if (lastLogin !== "") {
+                result.innerHTML = `Welcome back, ${username}. Your last login was on ${lastLogin}.`;
+            } else {
+                result.innerHTML = `Welcome back, ${username}.`;
+            }
+
+            
+            SetCookie("lastLogin", getCurrentDateTime(), 1);
+        }
+    });
+</script>
+
 </body>
 </html>
