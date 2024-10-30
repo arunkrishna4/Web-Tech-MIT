@@ -35,10 +35,10 @@
         document.cookie = `${encodeURIComponent(id)}=${encodeURIComponent(value)};${expires}path=/;`;
     }
 
-    // Function to get the current date and time in a readable format
-    function getCurrentDateTime() {
+    // Function to get the current date without time
+    function getCurrentDate() {
         var d = new Date();
-        return d.toLocaleString(); // Returns date and time as a string
+        return d.toLocaleDateString(); // Returns only the date as a string
     }
 
     // On page load
@@ -47,25 +47,25 @@
         var lastLogin = getCookie("lastLogin");
 
         if (username === "") {
-            
+            // If no username cookie is found, ask the user for their name
             var user = prompt("What is your name?");
             if (user != null && user.trim() !== '') {
-                SetCookie("username", user, 1); 
-                SetCookie("lastLogin", getCurrentDateTime(), 1); 
+                SetCookie("username", user, 1); // Set cookie for 1 day
+                SetCookie("lastLogin", getCurrentDate(), 1); // Set last login date without time
                 result.innerHTML = `Hello, ${user}! Welcome for the first time.`;
             } else {
                 result.innerHTML = "You should have entered your name :(";
             }
         } else {
-            
+            // If user is returning, display a welcome message and last login date
             if (lastLogin !== "") {
                 result.innerHTML = `Welcome back, ${username}. Your last login was on ${lastLogin}.`;
             } else {
                 result.innerHTML = `Welcome back, ${username}.`;
             }
 
-            
-            SetCookie("lastLogin", getCurrentDateTime(), 1);
+            // Update the last login date to the current date (without time) for the next visit
+            SetCookie("lastLogin", getCurrentDate(), 1);
         }
     });
 </script>
