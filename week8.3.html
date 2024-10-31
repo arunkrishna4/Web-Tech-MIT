@@ -1,24 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #333;
+            color: white;
+        }
+        .clock {
+            font-size: 3em;
+            padding: 30px;
+            height: 200px;
+            width: 200px;
+            border: 2px solid #fff;
+            border-radius: 50%; /* Makes the div circular */
+            display: flex;
+            justify-content: center; /* Centers text horizontally */
+            align-items: center; /* Centers text vertically */
+            text-align: center;
+        }
+    </style>
+</head>
 <body>
 
-<h1>The Window Object</h1>
-<h2>The setTimeout() Method</h2>
-
-<h2 id="demo"></h2>
+<div class="clock" id="clock"></div>
 
 <script>
-const myTimeout = setTimeout(myGreeting, 100); 
-setInterval(myGreeting(),1000);
+    function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
 
-function myGreeting() {
-  var d = new Date(); 
-  var h=d.getHours();
-  var s=d.getSeconds();
-  var m=d.getMinutes();
-  document.getElementById("demo").innerHTML = h+":"+m+":"+s;
-  
-}
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        document.getElementById('clock').textContent = timeString;
+
+        // Update the clock every second
+        setTimeout(updateClock, 1000);
+    }
+
+    // Start the clock
+    updateClock();
 </script>
 
 </body>
