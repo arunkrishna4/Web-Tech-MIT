@@ -1,0 +1,631 @@
+//PHP MySQL example 1 
+//Connection Page : conn.php 
+<?php 
+$host = "localhost"; 
+$db_name = "mydb"; 
+$username = "root"; 
+$password = ""; 
+//connect to mysql server 
+$mysqli = new mysqli($host, $username, $password, $db_name); 
+//check if any connection error was encountered 
+if(mysqli_connect_errno()) { 
+echo "Error: Could not connect to database."; 
+exit; 
+} 
+else 
+?> 
+echo "Connected to database."; 
+//Authentication Page: auth.php 
+<?php 
+session_start(); 
+if(!isset($_SESSION["username"])){ 
+header("Location: login.php"); 
+exit(); } 
+?> 
+//Login Page: login.php 
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset="utf-8"> 
+<title>Login</title> 
+<link rel="stylesheet" href="main.css" /> 
+</head> 
+<body> 
+<?php 
+require('conn.php'); 
+session_start(); 
+// If form submitted, insert values into the database. 
+if (isset($_POST['username'])){ 
+// removes backslashes 
+$username = stripslashes($_REQUEST['username']); 
+//escapes special characters in a string 
+$username = mysqli_real_escape_string($mysqli,$username); 
+$password = stripslashes($_REQUEST['password']); 
+$password = mysqli_real_escape_string($mysqli,$password); 
+//Checking is user existing in the database or not 
+$query = "SELECT * FROM `users` WHERE username='$username' 
+and password='$password'"; 
+$result = mysqli_query($mysqli,$query) or die(mysql_error()); 
+$rows = mysqli_num_rows($result); 
+if($rows==1){if(!isset($_SESSION['username'])){ 
+$_SESSION['username'] = $username;} 
+// Redirect user to index.php 
+header("Location: index.php"); 
+//echo $_SESSION['username']; 
+}else{ 
+echo "<div class='form'> 
+<h3>Username/password is incorrect.</h3> 
+<br/>Click here to <a href='login.php'>Login</a></div>"; 
+} 
+}else{ 
+?> 
+<div class="form"> 
+<h1>Log In</h1> 
+<form action="" method="post" name="login"> 
+<input type="text" name="username" placeholder="Username" required /> 
+<input type="password" name="password" placeholder="Password" required /> 
+<input name="submit" type="submit" value="Login" /> 
+</form> 
+<p>Not registered yet? <a href='add.php'>Register Here</a></p> 
+</div> 
+<?php } ?> 
+</body> 
+</html> 
+//Logout: logout.php 
+<?php 
+session_start(); 
+session_destroy(); 
+header("Location: login.php"); 
+?> 
+//reg.php 
+<!DOCTYPE HTML> 
+<html> 
+<head> 
+<title>Create Record</title> 
+</head> 
+<body> 
+<h1>Add a Record</h1> 
+<div> 
+<p>Welcome <?php      
+include 'conn.php'; 
+$action = isset($_POST['action']) ? $_POST['action'] : ""; 
+if($action=='create'){ 
+//File upload 
+if(isset($_FILES['image'])) 
+{        
+$errors= array();        
+$file_name = $_FILES['image']['name'];   
+$file_size = $_FILES['image']['size'];   
+$file_tmp = $_FILES['image']['tmp_name'];    
+$file_type = $_FILES['image']['type'];     
+$temp=explode('.',$_FILES['image']['name']);           
+$file_ext=end($temp);           
+$expensions= array("jpeg","jpg","png");  
+if(in_array($file_ext,$expensions)=== false){           
+ if($file_size > 2097152) {           
+$errors[]="extension not allowed, please choose a JPEG or PNG file."; }      
+       $errors[]='File size must be less than 2 MB';  
+    }        
+    if(empty($errors)==true) {          
+    move_uploaded_file($file_tmp,"images/".$file_name);           
+    echo "Success";  
+    echo "<ul> <li>Sent file: ".$file_name."      
+               <li>File size: ".$file_size."              
+      <li>File type:".$file_type."           
+        </ul>";  
+   }else{   
+   print_r($errors); 
+   }   
+        //write query 
+        $query = "INSERT INTO users SET firstname = ?, lastname = ?, username = ?, password  = ?, 
+profilepic=?"; 
+$pass=$_POST['password']; 
+$pic="images/".$file_name; 
+        //prepare query for excecution 
+        $stmt = $mysqli->prepare($query); 
+$stmt->bind_param('sssss', $_POST['firstname'], $_POST['lastname'], $_POST['username'],$pass,$pic); 
+         
+        // Execute the query 
+        if($stmt->execute()){ 
+         
+            echo "Record was saved."; 
+        }else{ 
+            die('Unable to save record.'); 
+        }      
+ }    
+} 
+ 
+?> 
+ 
+<!--we have our html form here where user information will be entered--> 
+<form action='#' method='post' border='0' enctype="multipart/form-data"> 
+    <table> 
+        <tr> 
+            <td>Firstname</td> 
+            <td><input type='text' name='firstname' /></td> 
+        </tr> 
+        <tr> 
+            <td>Lastname</td> 
+            <td><input type='text' name='lastname' /></td> 
+        </tr> 
+        <tr> 
+            <td>Username</td> 
+            <td><input type='text' name='username' /></td> 
+        </tr> 
+        <tr> 
+            <td>Password</td> 
+            <td><input type='password' name='password' /></td> 
+  <tr> 
+            <td>Upload Profile Picture</td> 
+            <td><input type='file' name='image' /></td> 
+        <tr> 
+            <td></td> 
+            <td> 
+                <input type='hidden' name='action' value='create' /> 
+                <input type='submit' value='Save' /> 
+                 
+               <a href='login.php'>Back to login</a> 
+            </td> 
+        </tr> 
+    </table> 
+</form> 
+ 
+</body> 
+</html> 
+ 
+// Index: index.php 
+<!DOCTYPE HTML> 
+<html> 
+    <head> 
+        <title>Read Records</title> 
+    </head> 
+<body> 
+<?php 
+include("auth.php"); 
+?> 
+<h1>Read Records</h1> 
+<div> 
+<p>Welcome <?php echo $_SESSION['username']; ?>!</p> 
+<p>This is secure area.</p> 
+ 
+<a href="logout.php">Logout</a> 
+</div> 
+<?php 
+include 'conn.php'; 
+if(isset($_GET['action'])) 
+$action=$_GET['action']; 
+else $action=""; 
+//if the user clicked ok, run our delete query 
+if($action=='deleted'){ 
+echo "User was deleted."; 
+} 
+$query = "select * from users"; 
+$stmt = $mysqli->prepare($query); 
+$stmt->execute(); 
+$result = $stmt->get_result(); 
+$stmt->close(); 
+//$result = $mysqli->query( $query ); 
+$num_results = $result->num_rows; 
+echo "<div><a href='add.php'>Create New Record</a></div>"; 
+if( $num_results ){ 
+echo "<table border='1'>"; 
+echo "<tr>"; 
+echo "<th>Firstname</th>"; 
+echo "<th>Lastname</th>"; 
+            echo "<th>Username</th>"; 
+   echo "<th>Profile Picture</th>"; 
+            echo "<th>Action</th>"; 
+        echo "</tr>"; 
+ 
+ 
+    while( $row = $result->fetch_assoc() ){ 
+     
+        //extract row 
+        //this will make $row['firstname'] to just $firstname only 
+        extract($row); 
+ 
+        //creating new table row per record 
+        echo "<tr>"; 
+            echo "<td>{$firstname}</td>"; 
+            echo "<td>{$lastname}</td>"; 
+            echo "<td>{$username}</td>"; 
+   echo "<td> 
+   <img height='100px' width='100px' src=\"{$profilepic}\"/> 
+   </td>"; 
+   ?> 
+   <?php 
+            echo "<td>"; 
+                echo "<a href='edit.php?id={$id}'>Edit</a>"; 
+                //echo " / "; 
+                 
+                // delete_user is a javascript function, see at the bottom par of the page 
+                echo "<a href='#' onclick='delete_user( {$id} );'>Delete</a>"; 
+            echo "</td>"; 
+echo "</tr>"; 
+} 
+//end table 
+echo "</table>"; 
+} 
+//if table is empty 
+else{ 
+echo "No records found."; 
+} 
+$result->free(); 
+$mysqli->close(); 
+?> 
+<script type='text/javascript'> 
+function delete_user( id ){ 
+var answer = confirm('Are you sure?'); 
+//if user clicked ok 
+if ( answer ){  
+//redirect to url with action as delete and id to the record to be deleted 
+window.location = 'delete.php?id=' + id; 
+} 
+} 
+function user_suggestion() 
+{ 
+var user = document.getElementById("user").value; 
+var xhr; 
+if (window.XMLHttpRequest) { // Mozilla, Safari, ... 
+    xhr = new XMLHttpRequest(); 
+} else if (window.ActiveXObject) { // IE 8 and older 
+    xhr = new ActiveXObject("Microsoft.XMLHTTP"); 
+} 
+var data = "username=" + user; 
+     xhr.open("POST", "search.php", true);  
+     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");                   
+     xhr.send(data); 
+  xhr.onreadystatechange = display_data; 
+ function display_data() { 
+  if (xhr.readyState == 4) { 
+      if (xhr.status == 200) { 
+       //alert(xhr.responseText);     
+   document.getElementById("suggestion").innerHTML = xhr.responseText; 
+      } else { 
+        alert('There was a problem with the request.'); 
+      } 
+     } 
+ } 
+} 
+</script> 
+ 
+<h1>Search User Record</h1> 
+<div> 
+<form> 
+ <br/><br/> 
+  <label for="book">Search User </label> 
+  <div> 
+  <input type="text" id="user" onKeyUp="user_suggestion()"> 
+<div id="suggestion"></div> 
+</div> 
+<!--<input name="submit" type="submit" value="Submit" />--> 
+</form> 
+</div>  
+</body> 
+</html> 
+//Search Page: search.php 
+<?php 
+//provide your hostname, username and dbname 
+include 'conn.php'; 
+include("auth.php"); 
+$user_name = $_POST['username']; 
+$sql = "select firstname, lastname, username from users where firstname LIKE '$user_name%'"; 
+$result = mysqli_query($mysqli, $sql); 
+while($row = mysqli_fetch_array($result)) 
+{ 
+echo "<p>".$row['firstname']." ".$row['lastname']."</p>"; 
+} 
+?> 
+//Registration : add.php 
+<!DOCTYPE HTML> 
+<html> 
+<head> 
+<title>Create Record</title> 
+</head> 
+<body> 
+<h1>Add a Record</h1> 
+<div> 
+<p>Welcome <?php      
+include 'conn.php'; 
+include 'auth.php';  
+echo $_SESSION['username']; ?>!</p> 
+<p>This is secure area.</p> 
+<a href="logout.php">Logout</a> 
+</div> 
+<?php 
+$action = isset($_POST['action']) ? $_POST['action'] : ""; 
+if($action=='create'){ 
+//File upload 
+if(isset($_FILES['image'])) 
+{        
+$errors= array();        
+$file_name = $_FILES['image']['name'];   
+$file_size = $_FILES['image']['size'];   
+$file_tmp = $_FILES['image']['tmp_name'];    
+$file_type = $_FILES['image']['type'];     
+$temp=explode('.',$_FILES['image']['name']);           
+$file_ext=end($temp);           
+$expensions= array("jpeg","jpg","png");  
+if(in_array($file_ext,$expensions)=== false){           
+$errors[]="extension not allowed, please choose a JPEG or PNG file."; }       if($file_size > 2097152) {           
+       $errors[]='File size must be less than 2 MB';  
+    }        
+    if(empty($errors)==true) {          
+    move_uploaded_file($file_tmp,"images/".$file_name);           
+    echo "Success";  
+    echo "<ul> <li>Sent file: ".$file_name."      
+               <li>File size: ".$file_size."              
+      <li>File type:".$file_type."           
+        </ul>";  
+   }else{   
+   print_r($errors); 
+   }   
+        //write query 
+        $query = "INSERT INTO users SET firstname = ?, lastname = ?, username = ?, password  = ?, 
+profilepic=?"; 
+$pass=$_POST['password']; 
+$pic="images/".$file_name; 
+        //prepare query for excecution 
+        $stmt = $mysqli->prepare($query); 
+$stmt->bind_param('sssss', $_POST['firstname'], $_POST['lastname'], $_POST['username'],$pass,$pic); 
+         
+        // Execute the query 
+        if($stmt->execute()){ 
+         
+            echo "Record was saved."; 
+        }else{ 
+            die('Unable to save record.'); 
+        }      
+ }    
+} 
+ 
+?> 
+ 
+<!--we have our html form here where user information will be entered--> 
+<form action='#' method='post' border='0' enctype="multipart/form-data"> 
+    <table> 
+        <tr> 
+            <td>Firstname</td> 
+            <td><input type='text' name='firstname' /></td> 
+        </tr> 
+        <tr> 
+            <td>Lastname</td> 
+            <td><input type='text' name='lastname' /></td> 
+        </tr> 
+        <tr> 
+            <td>Username</td> 
+            <td><input type='text' name='username' /></td> 
+        </tr> 
+        <tr> 
+            <td>Password</td> 
+            <td><input type='password' name='password' /></td> 
+  <tr> 
+            <td>Upload Profile Picture</td> 
+            <td><input type='file' name='image' /></td> 
+        <tr> 
+            <td></td> 
+            <td> 
+                <input type='hidden' name='action' value='create' /> 
+                <input type='submit' value='Save' /> 
+                 
+                <a href='index.php'>Back to index</a> 
+            </td> 
+        </tr> 
+    </table> 
+</form> 
+ 
+</body> 
+</html> 
+//Edit: edit.php 
+<!DOCTYPE HTML> 
+<html> 
+    <head> 
+        <title>Update</title> 
+    </head> 
+<body> 
+<?php 
+ 
+include 'conn.php'; 
+include 'auth.php'; 
+?> 
+<h1>Update a Record</h1> 
+<div class="form"> 
+<p>Welcome <?php echo $_SESSION['username']; ?>!</p> 
+<a href="logout.php">Logout</a> 
+</div> 
+<?php 
+ 
+// if the form was submitted/posted, update the record 
+if($_POST){ 
+ 
+    //write query 
+    $sql = "UPDATE users SET firstname = ?, lastname = ?, username = ?, password  = ? WHERE id= ?"; 
+     
+    $stmt = $mysqli->prepare($sql); 
+ 
+    $stmt->bind_param('ssssi', $_POST['firstname'], $_POST['lastname'], $_POST['username'], 
+$_POST['password'], $_POST['id']); 
+        // execute the update statement 
+    if($stmt->execute()){ 
+        echo "User was updated."; 
+         
+        // close the prepared statement 
+        $stmt->close(); 
+    }else{ 
+        die("Unable to update."); 
+    } 
+} 
+ 
+$id=$_GET['id']; 
+/* 
+$sql = "SELECT id, firstname, lastname, username, password FROM users WHERE id =$id"; 
+ 
+$result = $mysqli->query( $sql ); 
+*/ 
+$sql = "SELECT id, firstname, lastname, username, password FROM users WHERE id =?"; 
+$stmt = $mysqli->prepare($sql); 
+ 
+    $stmt->bind_param('i', $id); 
+ $stmt->execute(); 
+$result = $stmt->get_result(); 
+$stmt->close(); 
+$row = $result->fetch_assoc(); 
+ 
+// php's extract() makes $row['firstname'] to $firstname automatically 
+extract($row); 
+ 
+//disconnect from database 
+$result->free(); 
+$mysqli->close(); 
+ 
+?> 
+ 
+<!--we have our html form here where new user information will be entered--> 
+<form action='edit.php?id=<?php echo $id; ?>' method='post' border='0'> 
+    <table> 
+        <tr> 
+            <td>Firstname</td> 
+            <td><input type='text' name='firstname' value='<?php echo $firstname;  ?>' /></td> 
+        </tr> 
+        <tr> 
+            <td>Lastname</td> 
+            <td><input type='text' name='lastname' value='<?php echo $lastname;  ?>' /></td> 
+        </tr> 
+        <tr> 
+            <td>Username</td> 
+            <td><input type='text' name='username'  value='<?php echo $username;  ?>' /></td> 
+        </tr> 
+        <tr> 
+            <td>Password</td> 
+            <td><input type='password' name='password'  value='<?php echo $password;  ?>' /></td> 
+        <tr> 
+            <td></td> 
+            <td>        
+                <input type='hidden' name='id' value='<?php echo $id ?>' />  
+                <input type='submit' value='Edit' /> 
+                <a href='index.php'>Back to index</a> 
+            </td> 
+        </tr> 
+    </table> 
+</form> 
+</body> 
+</html> 
+ 
+//Delete : delete.php 
+<?php 
+include 'conn.php'; 
+// delete sql query 
+$sql = "DELETE FROM users WHERE id = ?"; 
+ 
+// prepare the sql statement 
+if($stmt = $mysqli->prepare($sql)){ 
+ 
+    // bind the id of the record to be deleted 
+    // we use "i" here for integer 
+    $stmt->bind_param("i", $_GET['id']); 
+ 
+    // execute the delete statement 
+    if($stmt->execute()){ 
+     
+        // close the prepared statement 
+        $stmt->close(); 
+                // redirect to index page 
+        // parameter "action=deleted" is used to show that something was deleted 
+       header('Location: index.php?action=deleted'); 
+     
+ 
+    }else{ 
+        die("Unable to delete."); 
+    } 
+} 
+?> 
+ 
+//Example 2 
+//AJAX Example 
+// document 1 
+<html> 
+<head> 
+<script> 
+function showUser(str) { 
+    if (str == "") { 
+        document.getElementById("txtHint").innerHTML = ""; 
+        return; 
+    } else {  
+        if (window.XMLHttpRequest) { 
+            // code for IE7+, Firefox, Chrome, Opera, Safari 
+            xmlhttp = new XMLHttpRequest(); 
+        } else { 
+            // code for IE6, IE5 
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+        } 
+        xmlhttp.onreadystatechange = function() { 
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) { 
+                document.getElementById("txtHint").innerHTML = xmlhttp.responseText; 
+            } 
+        }; 
+        xmlhttp.open("GET","getuser.php?q="+str,true); 
+        xmlhttp.send(); 
+    } 
+} 
+</script> 
+</head> 
+<body> 
+ 
+<form> 
+<img src="2.jpg" width=500px height=900px /> 
+<select name="users" onchange="showUser(this.value)"> 
+  <option value="">Select a person:</option> 
+  <option value="1">Record 1</option> 
+  <option value="2">Record 2</option> 
+  <option value="3">Record 3</option> 
+ 
+</select> 
+</form> 
+<br> 
+<div id="txtHint"><b>Person information...</b></div> 
+</body> 
+</html> 
+//document 2 
+<!DOCTYPE html> 
+<html> 
+<head> 
+<style> 
+table { 
+width: 100%; 
+border-collapse: collapse; 
+} 
+table, td, th { 
+border: 1px solid black; 
+padding: 5px; 
+} 
+th {text-align: left;} 
+</style> 
+</head> 
+<body> 
+<h1> AJAX RESPONSE </h1> 
+<?php 
+$q = $_GET['q']; 
+$con = mysqli_connect('localhost','root','','mydb'); 
+if (!$con) { 
+die('Could not connect: ' . mysqli_error($con)); 
+} 
+$sql="SELECT * FROM customers WHERE id = '".$q."'"; 
+$result = mysqli_query($con,$sql); 
+echo "<table> 
+<tr> 
+<th>Name</th> 
+<th>Address</th> 
+<th>Phone</th> 
+</tr>"; 
+while($row = mysqli_fetch_array($result)) { 
+echo "<tr>"; 
+echo "<td>" . $row['name'] . "</td>"; 
+echo "<td>" . $row['address'] . "</td>"; 
+echo "<td>" . $row['phone'] . "</td>"; 
+echo "</tr>"; 
+} 
+echo "</table>"; 
+mysqli_close($con); 
+?> 
+</body> 
+</html> 
