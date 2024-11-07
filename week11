@@ -13,8 +13,9 @@ echo "Error: Could not connect to database.";
 exit; 
 } 
 else 
-?> 
 echo "Connected to database."; 
+?>
+
 //Authentication Page: auth.php 
 <?php 
 session_start(); 
@@ -22,6 +23,7 @@ if(!isset($_SESSION["username"])){
 header("Location: login.php"); 
 exit(); } 
 ?> 
+
 //Login Page: login.php 
 <!DOCTYPE html> 
 <html> 
@@ -71,12 +73,14 @@ echo "<div class='form'>
 <?php } ?> 
 </body> 
 </html> 
+
 //Logout: logout.php 
 <?php 
 session_start(); 
 session_destroy(); 
 header("Location: login.php"); 
 ?> 
+
 //reg.php 
 <!DOCTYPE HTML> 
 <html> 
@@ -316,6 +320,7 @@ while($row = mysqli_fetch_array($result))
 echo "<p>".$row['firstname']." ".$row['lastname']."</p>"; 
 } 
 ?> 
+
 //Registration : add.php 
 <!DOCTYPE HTML> 
 <html> 
@@ -416,6 +421,7 @@ $stmt->bind_param('sssss', $_POST['firstname'], $_POST['lastname'], $_POST['user
  
 </body> 
 </html> 
+
 //Edit: edit.php 
 <!DOCTYPE HTML> 
 <html> 
